@@ -4,11 +4,13 @@ import ProductGrid from '@/components/ProductGrid/ProductGrid';
 import BlobShape from '@/components/BlobShape/BlobShape';
 import * as store from '@/lib/store';
 import Link from 'next/link';
+import styles from './page.module.css';
+
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default function HomePage() {
-  const products = store.getProducts();
+  const products = store.getProducts() || [];
   const recommended = products.filter(p => p.badge === 'Tavsiya etilgan' || p.badge === "Eng ko'p sotilgan");
   const onSale = products.filter(p => p.oldPrice !== null && p.inStock);
   const newProducts = products.filter(p => p.badge === 'Yangi');
