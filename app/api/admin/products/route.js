@@ -19,7 +19,11 @@ export async function POST(request) {
   }
   const data = await request.json();
   const newProduct = store.addProduct(data);
-  revalidatePath('/');
-  revalidatePath('/products');
+  try {
+    revalidatePath('/');
+    revalidatePath('/products');
+  } catch (e) {
+    console.error("Revalidation error:", e);
+  }
   return NextResponse.json(newProduct, { status: 201 });
 }

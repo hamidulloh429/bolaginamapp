@@ -14,9 +14,12 @@ export async function PUT(request, { params }) {
   if (!updatedProduct) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
-  revalidatePath('/');
-  revalidatePath('/products');
-  revalidatePath(`/products/${id}`);
+  try {
+    revalidatePath('/');
+    revalidatePath('/products');
+  } catch (e) {
+    console.error("Revalidation error:", e);
+  }
   return NextResponse.json(updatedProduct);
 }
 
@@ -30,8 +33,11 @@ export async function DELETE(request, { params }) {
   if (!success) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
-  revalidatePath('/');
-  revalidatePath('/products');
-  revalidatePath(`/products/${id}`);
+  try {
+    revalidatePath('/');
+    revalidatePath('/products');
+  } catch (e) {
+    console.error("Revalidation error:", e);
+  }
   return NextResponse.json({ success: true });
 }
