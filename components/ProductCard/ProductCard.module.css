@@ -1,0 +1,151 @@
+.card {
+  background: white;
+  overflow: hidden;
+  transition: all 0.4s;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  text-decoration: none;
+  color: var(--text-primary);
+}
+.card:hover {
+  animation: wiggle 0.5s ease;
+  box-shadow: var(--shadow-hover) !important;
+}
+@keyframes wiggle {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+  75% { transform: rotate(-1deg); }
+  100% { transform: rotate(0deg); }
+}
+.imageWrap {
+  position: relative;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.emoji {
+  font-size: 4rem;
+}
+.badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 4px 14px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border-radius: var(--radius-tag);
+  z-index: 2;
+}
+.heartBtn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.heartBtn:hover {
+  background: white;
+  transform: scale(1.1);
+}
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+.heartActive {
+  animation: heartPop 0.4s ease;
+}
+.heartIcon {
+  width: 20px;
+  height: 20px;
+}
+.info {
+  padding: 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.priceRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.price {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+.oldPrice {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+.salePrice {
+  color: var(--accent-coral);
+}
+.addBtn {
+  margin-top: auto;
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.addBtnActive {
+  background: var(--accent-green);
+  color: white;
+}
+.addBtnActive:hover {
+  background: var(--accent-green-hover);
+}
+.addBtnDisabled {
+  background: var(--border-color);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+.outOfStock {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 249, 242, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.outOfStockLabel {
+  background: var(--text-primary);
+  color: white;
+  padding: 6px 20px;
+  border-radius: var(--radius-tag);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transform: rotate(-4deg);
+}

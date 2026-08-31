@@ -1,0 +1,37 @@
+.selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--bg-primary);
+  border-radius: 12px;
+  padding: 4px;
+}
+.btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  background: white;
+  transition: all 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  cursor: pointer;
+}
+.btn:hover:not(:disabled) {
+  background: var(--accent-green-light);
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.value {
+  width: 44px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+}

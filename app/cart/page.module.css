@@ -1,0 +1,97 @@
+.page {
+  padding: 32px 0 60px;
+  min-height: 50vh;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.count {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.summary {
+  margin-top: 32px;
+  padding: 28px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.totalLabel {
+  font-size: 1rem;
+  color: var(--text-secondary);
+}
+
+.totalAmount {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+
+.checkoutBtn {
+  background: var(--accent-coral);
+  color: white;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 14px 36px;
+  border-radius: var(--radius-btn);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.checkoutBtn:hover {
+  background: var(--accent-coral-hover);
+  transform: scale(1.03);
+}
+
+.empty {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.emptyEmoji {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.emptyText {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.shopBtn {
+  display: inline-flex;
+  background: var(--accent-green);
+  color: white;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 14px 36px;
+  border-radius: var(--radius-btn);
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.shopBtn:hover {
+  background: var(--accent-green-hover);
+  transform: scale(1.03);
+}

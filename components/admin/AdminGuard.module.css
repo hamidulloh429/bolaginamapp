@@ -1,0 +1,20 @@
+.layout {
+  display: flex;
+  min-height: 100dvh;
+}
+
+.content {
+  flex: 1;
+  padding: 32px;
+  overflow-y: auto;
+  background: var(--bg-primary);
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}

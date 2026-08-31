@@ -1,0 +1,148 @@
+.page {
+  padding: 32px 0 60px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 32px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.input {
+  padding: 14px 18px;
+  border-radius: var(--radius-input);
+  border: 2px solid var(--border-color);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  background: white;
+}
+
+.input:focus {
+  border-color: var(--accent-coral);
+  outline: none;
+}
+
+.textarea {
+  padding: 14px 18px;
+  border-radius: var(--radius-input);
+  border: 2px solid var(--border-color);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  background: white;
+  min-height: 100px;
+  resize: vertical;
+}
+
+.textarea:focus {
+  border-color: var(--accent-coral);
+  outline: none;
+}
+
+.orderSummary {
+  margin-top: 24px;
+  padding: 24px;
+  background: var(--bg-lavender);
+  border-radius: 20px;
+}
+
+.summaryItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.summaryItem:last-child {
+  border: none;
+}
+
+.summaryTotal {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+  margin-top: 8px;
+  border-top: 2px solid var(--text-primary);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.submitBtn {
+  margin-top: 24px;
+  width: 100%;
+  padding: 16px;
+  background: var(--accent-coral);
+  color: white;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  border-radius: var(--radius-btn);
+  border: none;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.submitBtn:hover {
+  background: var(--accent-coral-hover);
+}
+
+.submitBtn:disabled {
+  opacity: 0.5;
+}
+
+.success {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.successEmoji {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.successTitle {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.successText {
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.homeLink {
+  display: inline-block;
+  padding: 16px;
+  background: var(--accent-coral);
+  color: white;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  border-radius: var(--radius-btn);
+  border: none;
+  transition: all 0.3s;
+  text-decoration: none;
+  width: auto;
+}
+
+.homeLink:hover {
+  background: var(--accent-coral-hover);
+}

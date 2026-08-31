@@ -1,0 +1,60 @@
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.iconWrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bgCoral {
+  background: rgba(255, 107, 91, 0.15);
+  color: var(--accent-coral);
+}
+
+.bgGreen {
+  background: rgba(143, 203, 155, 0.15);
+  color: var(--accent-green);
+}
+
+.bgYellow {
+  background: rgba(255, 200, 87, 0.15);
+  color: var(--accent-yellow);
+}
+
+.bgLavender {
+  background: var(--bg-lavender);
+  color: var(--text-primary);
+}
+
+.icon {
+  font-size: 1.5rem;
+}
+
+.info {
+  flex: 1;
+}
+
+.title {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.value {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}

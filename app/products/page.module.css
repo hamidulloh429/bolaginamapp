@@ -1,0 +1,57 @@
+.page {
+  padding-top: 32px;
+  padding-bottom: 60px;
+}
+
+.title {
+  font-size: 2.2rem;
+  margin-bottom: 24px;
+}
+
+.searchWrap {
+  max-width: 500px;
+  margin-bottom: 24px;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.filterChip {
+  padding: 8px 20px;
+  border-radius: var(--radius-tag);
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 2px solid var(--border-color);
+  background: transparent;
+  color: var(--text-primary);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.filterChip:hover {
+  border-color: var(--accent-coral);
+  color: var(--accent-coral);
+}
+
+.filterChipActive {
+  background: var(--accent-coral);
+  color: white;
+  border-color: var(--accent-coral);
+}
+
+.empty {
+  text-align: center;
+  padding: 80px 20px;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+}
+
+.emptyEmoji {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 16px;
+}

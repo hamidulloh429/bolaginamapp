@@ -1,40 +1,78 @@
+/* ===== BOLAGINAM Global Styles ===== */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Colors */
+  --bg-primary: #FFF9F2;
+  --bg-primary-darker: #FFF0E0;
+  --text-primary: #2E3A59;
+  --text-secondary: #5A6785;
+  --text-muted: #8B95AB;
+  --accent-coral: #FF6B5B;
+  --accent-coral-hover: #FF5242;
+  --accent-coral-light: rgba(255, 107, 91, 0.12);
+  --accent-green: #8FCB9B;
+  --accent-green-hover: #7BBF89;
+  --accent-green-light: rgba(143, 203, 155, 0.15);
+  --accent-yellow: #FFC857;
+  --accent-yellow-hover: #FFB92E;
+  --accent-yellow-light: rgba(255, 200, 87, 0.18);
+  --bg-lavender: #F1EEFB;
+  --bg-lavender-darker: #E2DCF5;
+  --white: #FFFFFF;
+  --border-color: rgba(46, 58, 89, 0.1);
+  --danger: #E74C3C;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 20px rgba(46, 58, 89, 0.07);
+  --shadow-medium: 0 6px 25px rgba(46, 58, 89, 0.1);
+  --shadow-hover: 0 10px 35px rgba(46, 58, 89, 0.14);
+  --shadow-card-1: 4px 6px 20px rgba(46, 58, 89, 0.08);
+  --shadow-card-2: -2px 8px 22px rgba(143, 203, 155, 0.12);
+  --shadow-card-3: 3px 5px 18px rgba(255, 200, 87, 0.12);
+
+  /* Radii — "handcrafted" look */
+  --radius-card-1: 28px 14px 26px 10px;
+  --radius-card-2: 14px 28px 10px 26px;
+  --radius-card-3: 22px 18px 24px 16px;
+  --radius-card-4: 16px 24px 18px 22px;
+  --radius-btn: 50px;
+  --radius-input: 16px;
+  --radius-tag: 30px;
+
+  /* Sizes */
+  --nav-height: 72px;
+  --max-width: 1200px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ===== Reset & Base ===== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100dvh;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-primary);
 }
 
 a {
@@ -42,8 +80,188 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: var(--font-body);
+  font-size: inherit;
+  color: inherit;
+}
+
+ul, ol { list-style: none; }
+
+img, svg {
+  max-width: 100%;
+  display: block;
+}
+
+input, textarea, select {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+/* ===== Keyframe Animations ===== */
+@keyframes bounceIn {
+  0% {
+    transform: scale(0) translateY(50px);
+    opacity: 0;
+  }
+  45% {
+    transform: scale(1.12) translateY(-8px);
+  }
+  65% {
+    transform: scale(0.96) translateY(3px);
+  }
+  80% {
+    transform: scale(1.03) translateY(-1px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  20% { transform: rotate(-2.5deg) scale(1.04); }
+  40% { transform: rotate(2deg) scale(1.04); }
+  60% { transform: rotate(-1.5deg) scale(1.03); }
+  80% { transform: rotate(1deg) scale(1.02); }
+}
+
+@keyframes cartBounce {
+  0%, 100% { transform: scale(1); }
+  25% { transform: scale(1.35) rotate(-8deg); }
+  45% { transform: scale(0.88) rotate(4deg); }
+  65% { transform: scale(1.12) rotate(-2deg); }
+  80% { transform: scale(0.97); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-8px) rotate(1.5deg); }
+  66% { transform: translateY(4px) rotate(-1deg); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes heartPop {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.4); }
+  60% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Reduced Motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ===== Focus Styles (Accessibility) ===== */
+:focus-visible {
+  outline: 3px solid var(--accent-coral);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-muted);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* ===== Utility Classes ===== */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.section {
+  padding: 70px 0;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 32px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 60px;
+  }
+  .section {
+    padding: 44px 0;
+  }
+  .container {
+    padding: 0 16px;
+  }
+  .section-title {
+    font-size: 1.6rem;
+    margin-bottom: 24px;
   }
 }

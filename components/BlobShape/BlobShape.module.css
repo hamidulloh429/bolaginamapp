@@ -1,0 +1,7 @@
+/* BlobShape.module.css */
+.blob {
+  position: absolute;
+  z-index: 0;
+  opacity: 0.15;
+  pointer-events: none;
+}
