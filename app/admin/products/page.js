@@ -134,7 +134,9 @@ function ProductsContent() {
                 <td className={styles.td}>{p.name}</td>
                 <td className={`${styles.td} ${styles.priceCell}`}>{formatPrice(p.price)}</td>
                 <td className={`${styles.td} ${styles.oldPriceCell}`}>{p.oldPrice ? formatPrice(p.oldPrice) : '-'}</td>
-                <td className={styles.td}>{p.category}</td>
+                <td className={styles.td}>
+                  {categories.find(c => c.id === p.category || c.name === p.category)?.name || p.category}
+                </td>
                 <td className={`${styles.td} ${p.stock < 10 ? styles.stockLow : styles.stockOk}`}>{p.stock} ta</td>
                 <td className={styles.td}>{p.badge || '-'}</td>
                 <td className={styles.td}>
@@ -215,7 +217,11 @@ function ProductsContent() {
               <label className={styles.label}>Kategoriya</label>
               <select name="category" required value={formData.category} onChange={handleChange} className={styles.select}>
                 <option value="">Tanlang...</option>
-                {categories.map(c => <option key={c.id} value={c.name}>{c.name}</option>)}
+                {categories.map(c => (
+                  <option key={c.id} value={c.id}>
+                    {c.emoji ? `${c.emoji} ` : ''}{c.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div className={styles.field}>

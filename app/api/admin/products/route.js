@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { verifyAdmin } from '@/lib/auth';
 import * as store from '@/lib/store';
 
@@ -18,5 +19,7 @@ export async function POST(request) {
   }
   const data = await request.json();
   const newProduct = store.addProduct(data);
+  revalidatePath('/');
+  revalidatePath('/products');
   return NextResponse.json(newProduct, { status: 201 });
 }

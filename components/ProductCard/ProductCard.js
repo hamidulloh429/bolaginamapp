@@ -44,7 +44,7 @@ export default function ProductCard({ product, index = 0 }) {
     >
       <div 
         className={styles.imageWrap}
-        style={{ backgroundColor: categoryColors[product.categoryId] || '#F1EEFB' }}
+        style={{ backgroundColor: categoryColors[product.category || product.categoryId] || '#F1EEFB' }}
       >
         {product.badge && (
           <span className={styles.badge} style={{ 

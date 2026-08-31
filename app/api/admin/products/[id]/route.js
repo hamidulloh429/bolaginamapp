@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { verifyAdmin } from '@/lib/auth';
 import * as store from '@/lib/store';
 
@@ -13,6 +14,9 @@ export async function PUT(request, { params }) {
   if (!updatedProduct) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
+  revalidatePath('/');
+  revalidatePath('/products');
+  revalidatePath(`/products/${id}`);
   return NextResponse.json(updatedProduct);
 }
 
@@ -26,5 +30,8 @@ export async function DELETE(request, { params }) {
   if (!success) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
+  revalidatePath('/');
+  revalidatePath('/products');
+  revalidatePath(`/products/${id}`);
   return NextResponse.json({ success: true });
 }
