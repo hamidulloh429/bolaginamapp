@@ -12,10 +12,12 @@ export async function POST(request) {
 
     const order = store.addOrder(data);
 
-    // Barcha adminlarga Telegram orqali bildirishnoma yuborish
-    notifyAdminsAboutOrder(order).catch(err => {
+    // Barcha adminlarga Telegram orqali bildirishnoma yuborish (Vercel serverless uchun await zarur)
+    try {
+      await notifyAdminsAboutOrder(order);
+    } catch (err) {
       console.error("Telegram bildirishnoma yuborishda xatolik:", err);
-    });
+    }
 
     return NextResponse.json({ success: true, order }, { status: 201 });
   } catch (err) {
