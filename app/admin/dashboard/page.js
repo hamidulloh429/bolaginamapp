@@ -10,12 +10,18 @@ function DashboardContent() {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch('/api/admin/stats')
+  const fetchStats = () => {
+    fetch('/api/admin/stats', { cache: 'no-store' })
       .then(r => r.json())
       .then(data => setStats(data))
       .catch(err => console.error(err))
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchStats();
+    const interval = setInterval(fetchStats, 10000); // 10 soniyada avto-yangilanish
+    return () => clearInterval(interval);
   }, []);
 
   if (loading) return <div>Yuklanmoqda...</div>;
@@ -23,7 +29,15 @@ function DashboardContent() {
 
   return (
     <div className={styles.page}>
-      <h1 className={styles.title}>Dashboard</h1>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+        <h1 className={styles.title} style={{ margin: 0 }}>Dashboard</h1>
+        <button 
+          onClick={fetchStats} 
+          style={{ padding: '8px 16px', borderRadius: '12px', background: 'var(--accent-coral)', color: 'white', border: 'none', cursor: 'pointer', fontWeight: 600 }}
+        >
+          🔄 Yangilash
+        </button>
+      </div>
       
       <div className={styles.statsGrid}>
         <StatsCard 
@@ -65,7 +79,7 @@ function DashboardContent() {
       </div>
 
       <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Eng ko'p sotilgan mahsulotlar</h2>
+        <h2 className={styles.sectionTitle}>Eng ko'p sotilgan mahsulotlar (Tan narx va Foyda)</h2>
         <div style={{ overflowX: 'auto' }}>
           <table className={styles.table}>
             <thead>
@@ -73,25 +87,32 @@ function DashboardContent() {
                 <th className={styles.th}>№</th>
                 <th className={styles.th}>Mahsulot</th>
                 <th className={styles.th}>Sotilgan soni</th>
-                <th className={styles.th}>Tushum</th>
-                <th className={styles.th}>Foyda</th>
+                <th className={styles.th}>Tushum (Sotish)</th>
+                <th className={styles.th}>Jami Tan Narx</th>
+                <th className={styles.th}>Mahsulot Foydasi</th>
               </tr>
             </thead>
             <tbody>
-              {(stats.topProducts || []).map((prod, idx) => (
-                <tr key={idx}>
-                  <td className={styles.td}>{idx + 1}</td>
-                  <td className={styles.td}>{prod.emoji} {prod.name}</td>
-                  <td className={styles.td}>{prod.quantity} ta</td>
-                  <td className={styles.td}>{formatPrice(prod.total)}</td>
-                  <td className={styles.td} style={{ color: 'var(--accent-green)', fontWeight: 600 }}>
-                    {formatPrice(prod.total - (prod.cost || 0))}
-                  </td>
-                </tr>
-              ))}
+              {(stats.topProducts || []).map((prod, idx) => {
+                const itemProfit = prod.total - (prod.cost || 0);
+                return (
+                  <tr key={idx}>
+                    <td className={styles.td}>{idx + 1}</td>
+                    <td className={styles.td}>{prod.emoji} {prod.name}</td>
+                    <td className={styles.td}>{prod.quantity} ta</td>
+                    <td className={styles.td}>{formatPrice(prod.total)}</td>
+                    <td className={styles.td}>{formatPrice(prod.cost || 0)}</td>
+                    <td className={styles.td} style={{ color: 'var(--accent-green)', fontWeight: 700 }}>
+                      +{formatPrice(itemProfit)}
+                    </td>
+                  </tr>
+                );
+              })}
               {(!stats.topProducts || stats.topProducts.length === 0) && (
                 <tr>
-                  <td colSpan="5" className={styles.td} style={{textAlign:'center'}}>Ma'lumot yo'q</td>
+                  <td colSpan="6" className={styles.td} style={{textAlign:'center', padding: '30px 0'}}>
+                    Hali sotilgan mahsulotlar mavjud emas (Buyurtma statusi "Yetkazildi" bo'lganda bu yerda ko'rinadi).
+                  </td>
                 </tr>
               )}
             </tbody>
@@ -131,7 +152,9 @@ function DashboardContent() {
               })}
               {(!stats.recentOrders || stats.recentOrders.length === 0) && (
                 <tr>
-                  <td colSpan="5" className={styles.td} style={{textAlign:'center'}}>Ma'lumot yo'q</td>
+                  <td colSpan="5" className={styles.td} style={{textAlign:'center', padding: '30px 0'}}>
+                    Hozircha buyurtmalar yo'q
+                  </td>
                 </tr>
               )}
             </tbody>
