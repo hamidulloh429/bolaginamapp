@@ -6,7 +6,7 @@ import { formatPrice } from '@/utils/formatPrice';
 import styles from './page.module.css';
 
 const initialForm = {
-  name: '', emoji: '', price: '', oldPrice: '', category: '', description: '', stock: '', badge: '', image: ''
+  name: '', emoji: '', price: '', costPrice: '', oldPrice: '', category: '', description: '', stock: '', badge: '', image: ''
 };
 
 function ProductsContent() {
@@ -33,7 +33,7 @@ function ProductsContent() {
 
   const handleOpenModal = (prod = null) => {
     setEditingProduct(prod);
-    setFormData(prod ? { ...prod, oldPrice: prod.oldPrice || '', image: prod.image || '' } : initialForm);
+    setFormData(prod ? { ...prod, oldPrice: prod.oldPrice || '', costPrice: prod.costPrice || '', image: prod.image || '' } : initialForm);
     setModalOpen(true);
   };
 
@@ -70,6 +70,7 @@ function ProductsContent() {
         body: JSON.stringify({
           ...formData,
           price: Number(formData.price),
+          costPrice: formData.costPrice ? Number(formData.costPrice) : null,
           oldPrice: formData.oldPrice ? Number(formData.oldPrice) : null,
           stock: Number(formData.stock)
         })
@@ -114,6 +115,7 @@ function ProductsContent() {
               <th className={styles.th}>Rasm</th>
               <th className={styles.th}>Nomi</th>
               <th className={styles.th}>Narx</th>
+              <th className={styles.th}>Tan narxi</th>
               <th className={styles.th}>Chegirma</th>
               <th className={styles.th}>Kategoriya</th>
               <th className={styles.th}>Ombor</th>
@@ -133,6 +135,7 @@ function ProductsContent() {
                 </td>
                 <td className={styles.td}>{p.name}</td>
                 <td className={`${styles.td} ${styles.priceCell}`}>{formatPrice(p.price)}</td>
+                <td className={styles.td}>{p.costPrice ? formatPrice(p.costPrice) : '-'}</td>
                 <td className={`${styles.td} ${styles.oldPriceCell}`}>{p.oldPrice ? formatPrice(p.oldPrice) : '-'}</td>
                 <td className={styles.td}>
                   {categories.find(c => c.id === p.category || c.name === p.category)?.name || p.category}
@@ -149,7 +152,7 @@ function ProductsContent() {
             ))}
             {products.length === 0 && (
               <tr>
-                <td colSpan="8" className={styles.td} style={{textAlign:'center'}}>Ma'lumot topilmadi</td>
+                <td colSpan="9" className={styles.td} style={{textAlign:'center'}}>Ma'lumot topilmadi</td>
               </tr>
             )}
           </tbody>
@@ -201,10 +204,14 @@ function ProductsContent() {
             )}
           </div>
           
-          <div className={styles.row}>
+          <div className={styles.row} style={{ gridTemplateColumns: '1fr 1fr 1fr' }}>
             <div className={styles.field}>
-              <label className={styles.label}>Narx (so'm)</label>
+              <label className={styles.label}>Sotish narxi (so'm)</label>
               <input type="number" name="price" required value={formData.price} onChange={handleChange} className={styles.input} />
+            </div>
+            <div className={styles.field}>
+              <label className={styles.label}>Tan narxi (so'm)</label>
+              <input type="number" name="costPrice" value={formData.costPrice} onChange={handleChange} className={styles.input} placeholder="Ixtiyoriy" />
             </div>
             <div className={styles.field}>
               <label className={styles.label}>Chegirma narx (so'm)</label>

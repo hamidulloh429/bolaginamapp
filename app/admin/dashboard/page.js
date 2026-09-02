@@ -39,6 +39,18 @@ function DashboardContent() {
           color="green" 
         />
         <StatsCard 
+          title="Oylik foyda" 
+          value={formatPrice(stats.monthProfit || 0)} 
+          icon="📈" 
+          color="green" 
+        />
+        <StatsCard 
+          title="Umumiy foyda" 
+          value={formatPrice(stats.totalProfit || 0)} 
+          icon="💎" 
+          color="yellow" 
+        />
+        <StatsCard 
           title="Jami mahsulotlar" 
           value={stats.totalProducts || 0} 
           icon="🧸" 
@@ -62,6 +74,7 @@ function DashboardContent() {
                 <th className={styles.th}>Mahsulot</th>
                 <th className={styles.th}>Sotilgan soni</th>
                 <th className={styles.th}>Tushum</th>
+                <th className={styles.th}>Foyda</th>
               </tr>
             </thead>
             <tbody>
@@ -71,11 +84,14 @@ function DashboardContent() {
                   <td className={styles.td}>{prod.emoji} {prod.name}</td>
                   <td className={styles.td}>{prod.quantity} ta</td>
                   <td className={styles.td}>{formatPrice(prod.total)}</td>
+                  <td className={styles.td} style={{ color: 'var(--accent-green)', fontWeight: 600 }}>
+                    {formatPrice(prod.total - (prod.cost || 0))}
+                  </td>
                 </tr>
               ))}
               {(!stats.topProducts || stats.topProducts.length === 0) && (
                 <tr>
-                  <td colSpan="4" className={styles.td} style={{textAlign:'center'}}>Ma'lumot yo'q</td>
+                  <td colSpan="5" className={styles.td} style={{textAlign:'center'}}>Ma'lumot yo'q</td>
                 </tr>
               )}
             </tbody>
