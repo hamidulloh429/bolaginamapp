@@ -10,9 +10,8 @@ export async function POST(request) {
       return NextResponse.json({ error: "Ma'lumotlar to'liq emas" }, { status: 400 });
     }
 
-    const order = store.addOrder(data);
+    const order = await store.addOrder(data);
 
-    // Barcha adminlarga Telegram orqali bildirishnoma yuborish (Vercel serverless uchun await zarur)
     try {
       await notifyAdminsAboutOrder(order);
     } catch (err) {
@@ -27,6 +26,7 @@ export async function POST(request) {
 }
 
 export async function GET() {
+  await store.syncFromBlob();
   const orders = store.getOrders();
   return NextResponse.json(orders);
 }

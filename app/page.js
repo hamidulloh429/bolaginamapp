@@ -9,7 +9,8 @@ import styles from './page.module.css';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export default function HomePage() {
+export default async function HomePage() {
+  await store.syncFromBlob();
   const products = store.getProducts() || [];
   
   // Eng oxirgi qo'shilgan mahsulotlar birinchi chiqadi

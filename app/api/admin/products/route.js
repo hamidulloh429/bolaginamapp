@@ -8,6 +8,7 @@ export async function GET() {
   if (!isAuthed) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  await store.syncFromBlob();
   const products = store.getProducts();
   return NextResponse.json(products);
 }
@@ -18,7 +19,7 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   const data = await request.json();
-  const newProduct = store.addProduct(data);
+  const newProduct = await store.addProduct(data);
   try {
     revalidatePath('/');
     revalidatePath('/products');

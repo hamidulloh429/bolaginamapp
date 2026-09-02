@@ -10,7 +10,7 @@ export async function PUT(request, { params }) {
   }
   const { id } = await params;
   const data = await request.json();
-  const updatedProduct = store.updateProduct(id, data);
+  const updatedProduct = await store.updateProduct(id, data);
   if (!updatedProduct) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }
@@ -29,7 +29,7 @@ export async function DELETE(request, { params }) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   const { id } = await params;
-  const success = store.deleteProduct(id);
+  const success = await store.deleteProduct(id);
   if (!success) {
     return NextResponse.json({ error: 'Not found' }, { status: 404 });
   }

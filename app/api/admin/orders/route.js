@@ -7,6 +7,7 @@ export async function GET() {
   if (!isAuthed) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  await store.syncFromBlob();
   const orders = store.getOrders();
   return NextResponse.json(orders);
 }

@@ -9,9 +9,6 @@ export async function PUT(request, { params }) {
   }
   const { id } = await params;
   const { status } = await request.json();
-  const updatedOrder = store.updateOrderStatus(id, status);
-  if (!updatedOrder) {
-    return NextResponse.json({ error: 'Not found' }, { status: 404 });
-  }
-  return NextResponse.json(updatedOrder);
+  const updated = await store.updateOrderStatus(id, status);
+  return NextResponse.json(updated);
 }

@@ -7,6 +7,7 @@ export async function GET() {
   if (!isAuthed) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  await store.syncFromBlob();
   const categories = store.getCategories();
   return NextResponse.json(categories);
 }
@@ -17,6 +18,6 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
   const data = await request.json();
-  const newCategory = store.addCategory(data);
+  const newCategory = await store.addCategory(data);
   return NextResponse.json(newCategory, { status: 201 });
 }

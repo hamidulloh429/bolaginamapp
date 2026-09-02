@@ -7,6 +7,7 @@ export async function GET() {
   if (!isAuthed) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
+  await store.syncFromBlob();
   const settings = store.getSiteSettings();
   return NextResponse.json(settings);
 }
@@ -18,7 +19,7 @@ export async function PUT(request) {
   }
   try {
     const data = await request.json();
-    const updated = store.updateSiteSettings(data);
+    const updated = await store.updateSiteSettings(data);
     return NextResponse.json(updated);
   } catch (err) {
     console.error("Settings update error:", err);
