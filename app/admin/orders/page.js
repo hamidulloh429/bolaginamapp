@@ -36,6 +36,21 @@ function OrdersContent() {
     }
   };
 
+  const handleDeleteOrder = async (id) => {
+    if (confirm(`Rostdan ham #${id} raqamli buyurtmani o'chirmoqchimisiz?\n\nUshbu buyurtma o'chirilsa, uning tushumi va foydasi statistikadan ham butunlay ayrib tashlanadi.`)) {
+      try {
+        const res = await fetch(`/api/admin/orders/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          fetchOrders();
+        } else {
+          alert("Buyurtmani o'chirishda xatolik yuz berdi");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
   return (
     <div>
       <div className={styles.header} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
@@ -59,7 +74,7 @@ function OrdersContent() {
               <th className={styles.th}>Manzil</th>
               <th className={styles.th}>Mahsulotlar (Tan narxi & Foyda)</th>
               <th className={styles.th}>Jami Summa / Foyda</th>
-              <th className={styles.th}>Status</th>
+              <th className={styles.th}>Status & Amallar</th>
             </tr>
           </thead>
           <tbody>
@@ -112,17 +127,36 @@ function OrdersContent() {
                     ) : null}
                   </td>
                   <td className={styles.td}>
-                    <select
-                      value={o.status}
-                      onChange={(e) => handleStatusChange(o.id, e.target.value)}
-                      className={`${styles.statusSelect} ${styles[o.status]}`}
-                    >
-                      <option value="yangi">Yangi</option>
-                      <option value="tayyorlanmoqda">Tayyorlanmoqda</option>
-                      <option value="yolda">Yo'lda</option>
-                      <option value="yetkazildi">Yetkazildi (Foydaga o'tadi)</option>
-                      <option value="bekor">Bekor</option>
-                    </select>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                      <select
+                        value={o.status}
+                        onChange={(e) => handleStatusChange(o.id, e.target.value)}
+                        className={`${styles.statusSelect} ${styles[o.status]}`}
+                      >
+                        <option value="yangi">Yangi</option>
+                        <option value="tayyorlanmoqda">Tayyorlanmoqda</option>
+                        <option value="yolda">Yo'lda</option>
+                        <option value="yetkazildi">Yetkazildi</option>
+                        <option value="bekor">Bekor</option>
+                      </select>
+                      <button
+                        onClick={() => handleDeleteOrder(o.id)}
+                        style={{
+                          padding: '6px 12px',
+                          borderRadius: '8px',
+                          background: '#FFEBEB',
+                          color: '#E74C3C',
+                          border: '1px solid #FADBD8',
+                          cursor: 'pointer',
+                          fontSize: '0.8rem',
+                          fontWeight: 600,
+                          transition: 'all 0.2s'
+                        }}
+                        title="Buyurtmani o'chirish"
+                      >
+                        🗑️ O'chirish
+                      </button>
+                    </div>
                   </td>
                 </tr>
               );
