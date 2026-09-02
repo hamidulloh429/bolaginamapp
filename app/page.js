@@ -11,7 +11,9 @@ export const revalidate = 0;
 
 export default function HomePage() {
   const products = store.getProducts() || [];
-  const recommended = products.filter(p => p.badge === 'Tavsiya etilgan' || p.badge === "Eng ko'p sotilgan");
+  
+  // Eng oxirgi qo'shilgan mahsulotlar birinchi chiqadi
+  const recentProducts = [...products].reverse();
   const onSale = products.filter(p => p.oldPrice !== null && p.inStock);
   const newProducts = products.filter(p => p.badge === 'Yangi');
 
@@ -27,17 +29,23 @@ export default function HomePage() {
         <CategoryNav />
       </section>
 
-      {/* Recommended */}
+      {/* Bizning o'yinchoqlar */}
       <section className={`${styles.section} container`}>
         <div className={styles.sectionHeader}>
           <h2 className={`section-title ${styles.sectionTitle}`}>
-            Tavsiya etamiz
+            🧸 Bizning o'yinchoqlar
           </h2>
           <Link href="/products" className={styles.viewAll}>
-            Hammasini ko'rish →
+            Barchasini ko'rish →
           </Link>
         </div>
-        <ProductGrid products={recommended.length > 0 ? recommended : products.slice(0, 4)} />
+        {recentProducts.length > 0 ? (
+          <ProductGrid products={recentProducts.slice(0, 8)} />
+        ) : (
+          <div style={{ textAlign: 'center', padding: '40px 0', color: 'var(--text-secondary)', background: 'white', borderRadius: '20px', boxShadow: 'var(--shadow-soft)' }}>
+            Hozircha mahsulotlar mavjud emas. Admin panel orqali yangi mahsulotlar qo'shishingiz mumkin!
+          </div>
+        )}
       </section>
 
       {/* On Sale */}
