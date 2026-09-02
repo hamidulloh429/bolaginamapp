@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import AdminGuard from '@/components/admin/AdminGuard';
 import AdminModal from '@/components/admin/AdminModal';
 import { formatPrice } from '@/utils/formatPrice';
+import { categories as defaultCategories } from '@/data/products';
 import styles from './page.module.css';
 
 const initialForm = {
@@ -11,7 +12,7 @@ const initialForm = {
 
 function ProductsContent() {
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState(defaultCategories);
   const [modalOpen, setModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
   const [formData, setFormData] = useState(initialForm);
@@ -27,13 +28,26 @@ function ProductsContent() {
     fetchProducts();
     fetch('/api/admin/categories')
       .then(r => r.json())
-      .then(data => setCategories(Array.isArray(data) ? data : []))
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) {
+          setCategories(data);
+        }
+      })
       .catch(err => console.error(err));
   }, []);
 
   const handleOpenModal = (prod = null) => {
     setEditingProduct(prod);
-    setFormData(prod ? { ...prod, oldPrice: prod.oldPrice || '', costPrice: prod.costPrice || '', image: prod.image || '' } : initialForm);
+    setFormData(prod ? { 
+      ...prod, 
+      oldPrice: prod.oldPrice || '', 
+      costPrice: prod.costPrice || '', 
+      image: prod.image || '',
+      category: prod.category || (categories[0]?.id || '')
+    } : {
+      ...initialForm,
+      category: categories[0]?.id || ''
+    });
     setModalOpen(true);
   };
 
@@ -172,7 +186,7 @@ function ProductsContent() {
             </div>
             <div className={styles.field}>
               <label className={styles.label}>Emoji (Zaxira)</label>
-              <input name="emoji" required value={formData.emoji} onChange={handleChange} className={styles.input} />
+              <input name="emoji" value={formData.emoji} onChange={handleChange} placeholder="🎁" className={styles.input} />
             </div>
           </div>
 
@@ -222,7 +236,13 @@ function ProductsContent() {
           <div className={styles.row}>
             <div className={styles.field}>
               <label className={styles.label}>Kategoriya</label>
-              <select name="category" required value={formData.category} onChange={handleChange} className={styles.select}>
+              <select 
+                name="category" 
+                required 
+                value={formData.category} 
+                onChange={handleChange} 
+                className={styles.select}
+              >
                 <option value="">Tanlang...</option>
                 {categories.map(c => (
                   <option key={c.id} value={c.id}>

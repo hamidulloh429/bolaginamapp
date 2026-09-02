@@ -4,7 +4,7 @@ import { Suspense, useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import SearchBar from '@/components/SearchBar/SearchBar';
 import ProductGrid from '@/components/ProductGrid/ProductGrid';
-import { categories } from '@/data/products';
+import { categories as defaultCategories } from '@/data/products';
 import styles from './page.module.css';
 
 function ProductsContent() {
@@ -12,6 +12,7 @@ function ProductsContent() {
   const initialCategory = searchParams.get('category') || 'Barchasi';
   
   const [products, setProducts] = useState([]);
+  const [categoriesList, setCategoriesList] = useState(defaultCategories);
   const [activeCategory, setActiveCategory] = useState(initialCategory);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -22,10 +23,26 @@ function ProductsContent() {
         if (Array.isArray(data)) setProducts(data);
       })
       .catch(err => console.error(err));
+
+    fetch('/api/categories')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data) && data.length > 0) setCategoriesList(data);
+      })
+      .catch(err => console.error(err));
   }, []);
   
   const filteredProducts = products.filter(product => {
-    const matchesCategory = activeCategory === 'Barchasi' || product.category === activeCategory;
+    if (activeCategory === 'Barchasi') {
+      const matchesSearch = (product.name || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
+                            (product.description || '').toLowerCase().includes(searchQuery.toLowerCase());
+      return matchesSearch;
+    }
+
+    const categoryObj = categoriesList.find(c => c.id === activeCategory || c.name === activeCategory);
+    const targetIds = [activeCategory, categoryObj?.id, categoryObj?.name].filter(Boolean);
+
+    const matchesCategory = targetIds.includes(product.category);
     const matchesSearch = (product.name || '').toLowerCase().includes(searchQuery.toLowerCase()) || 
                           (product.description || '').toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
@@ -50,15 +67,18 @@ function ProductsContent() {
         >
           Barchasi
         </button>
-        {categories.map(cat => (
-          <button 
-            key={cat.id}
-            className={`${styles.filterChip} ${activeCategory === cat.name ? styles.filterChipActive : ''}`}
-            onClick={() => setActiveCategory(cat.name)}
-          >
-            {cat.emoji} {cat.name}
-          </button>
-        ))}
+        {categoriesList.map(cat => {
+          const isActive = activeCategory === cat.id || activeCategory === cat.name;
+          return (
+            <button 
+              key={cat.id}
+              className={`${styles.filterChip} ${isActive ? styles.filterChipActive : ''}`}
+              onClick={() => setActiveCategory(cat.id)}
+            >
+              {cat.emoji} {cat.name}
+            </button>
+          );
+        })}
       </div>
       
       {filteredProducts.length > 0 ? (
